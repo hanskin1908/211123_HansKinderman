@@ -1,0 +1,88 @@
+﻿@model _211123_HansKinderman.Models.Device
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<h1>Index</h1>
+
+<h4>Device</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Consultar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Imei" class="control-label"></label>
+                <input name="Imei" asp-for="Imei" class="form-control" />
+                <span asp-validation-for="Imei" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CompanyId" class="control-label"></label>
+                <input name="CompanyId" asp-for="CompanyId" class="form-control" />
+                <span asp-validation-for="CompanyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" onclick=" Details()" data-target="#miModal">Consultar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="miModal" class="modal fade" role="dialog">
+    <div class="modal-dialog-centered">
+        Contenido del modal
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <h4>Device</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Imei)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Imei)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.VehicleId)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.VehicleId)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CompanyId)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CompanyId)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+    //$("#miModal").modal("show");
+
+
+        function Details() {
+            var IdCompany = $('input[name="CompanyId"]').val();
+            var imei = $('input[name="Imei"]').val();
+
+            $.post("@Url.Action("Consultar", "Device")", { idcompania: IdCompany, imei: imei },
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#miModal").modal("show");
+        }
+
+    </script>
+}
