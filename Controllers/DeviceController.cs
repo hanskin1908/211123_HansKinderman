@@ -22,13 +22,7 @@ namespace _211123_HansKinderman.Controllers
 
         public IActionResult Index()
         {
-          //  var data = await _serv.GetDetails(10, "354330030646882");
-            //if (data.Error)
-            //{
-            //    return RedirectToAction("Error", "Home");
-
-            //}
-            //return View(data.Lst);
+          
             return View();
         }
 
@@ -49,7 +43,6 @@ namespace _211123_HansKinderman.Controllers
 
             }
 
-            //List<Device> model = db.Emp_Information.ToList();
             return PartialView("Detail", data.UnitResp);
         }
 
